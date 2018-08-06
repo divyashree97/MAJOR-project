@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AUGUSTprojectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="details">
+          <Key>
+            <PropertyRef Name="Serial" />
+          </Key>
+          <Property Name="Serial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransDate" Type="date" Nullable="false" />
+          <Property Name="TransType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="transRemark" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amt" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="AccNo" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERinfo">
+          <Key>
+            <PropertyRef Name="AccNo" />
+          </Key>
+          <Property Name="AccNo" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__details__AccNo__1367E606">
+          <End Role="USERinfo" Type="Self.USERinfo" Multiplicity="1" />
+          <End Role="details" Type="Self.details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERinfo">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="details">
+              <PropertyRef Name="AccNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AUGUSTprojectModelStoreContainer">
+          <EntitySet Name="details" EntityType="Self.details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERinfo" EntityType="Self.USERinfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__details__AccNo__1367E606" Association="Self.FK__details__AccNo__1367E606">
+            <End Role="USERinfo" EntitySet="USERinfo" />
+            <End Role="details" EntitySet="details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AUGUSTprojectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="detail">
+          <Key>
+            <PropertyRef Name="Serial" />
+          </Key>
+          <Property Name="Serial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TransType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="transRemark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amt" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="AccNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USERinfo" Relationship="Self.FK__details__AccNo__1367E606" FromRole="details" ToRole="USERinfo" />
+        </EntityType>
+        <EntityType Name="USERinfo">
+          <Key>
+            <PropertyRef Name="AccNo" />
+          </Key>
+          <Property Name="AccNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="details" Relationship="Self.FK__details__AccNo__1367E606" FromRole="USERinfo" ToRole="details" />
+        </EntityType>
+        <Association Name="FK__details__AccNo__1367E606">
+          <End Role="USERinfo" Type="Self.USERinfo" Multiplicity="1" />
+          <End Role="details" Type="Self.detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERinfo">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="details">
+              <PropertyRef Name="AccNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AUGUSTprojectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="details" EntityType="Self.detail" />
+          <EntitySet Name="USERinfoes" EntityType="Self.USERinfo" />
+          <AssociationSet Name="FK__details__AccNo__1367E606" Association="Self.FK__details__AccNo__1367E606">
+            <End Role="USERinfo" EntitySet="USERinfoes" />
+            <End Role="details" EntitySet="details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AUGUSTprojectModelStoreContainer" CdmEntityContainer="AUGUSTprojectEntities">
+          <EntitySetMapping Name="details">
+            <EntityTypeMapping TypeName="AUGUSTprojectModel.detail">
+              <MappingFragment StoreEntitySet="details">
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="transRemark" ColumnName="transRemark" />
+                <ScalarProperty Name="Amt" ColumnName="Amt" />
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERinfoes">
+            <EntityTypeMapping TypeName="AUGUSTprojectModel.USERinfo">
+              <MappingFragment StoreEntitySet="USERinfo">
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
